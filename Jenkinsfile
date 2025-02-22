@@ -10,15 +10,16 @@ pipeline {
 		PATH = "$dockerHome/bin:$mavenHome/bin:$PATH"
 	}
 	stages {
-		stage('Java') {
-			agent { docker { image 'openjdk:11' } }
-			steps {
-				sh "java -version"
-			}
-		}
+		// stage('Java') {
+		// 	agent { docker { image 'openjdk:11' } }
+		// 	steps {
+		// 		sh "java -version"
+		// 	}
+		// }
 		stage('Maven') {
-			agent { docker { image 'maven:3.6.3' } }
+			agent { docker { image 'maven:3.6.3-jdk-8' } }
 			steps {
+				sh "cat /etc/*release"
 				sh 'mvn --version'
 				//sh "mvn --version"
 			}
