@@ -12,14 +12,19 @@ pipeline {
 	stages {
 		stage('Java') {
 			agent { docker { image 'openjdk:8' } }
+			steps {
+				sh "java -version"
+			}
 		}
 		stage('Maven') {
 			agent { docker { image 'maven:3.6.3' } }
+			steps {
+				sh "mvn --version"
+			}
 		}
 		stage('Checkout') {
 			steps {
-				sh "mvn --version"
-				sh 'docker version'
+				sh "docker version"
 				echo "Build"
 				echo "PATH - $PATH"
 				echo "JAVA_HOME - $env.JAVA_HOME"
