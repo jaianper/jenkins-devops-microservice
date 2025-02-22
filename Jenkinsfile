@@ -19,7 +19,9 @@ pipeline {
 		stage('Maven') {
 			agent { docker { image 'maven:3.6.3' } }
 			steps {
-				sh "mvn --version"
+				sh "locate java"
+				sh 'export JAVA_HOME=/usr/java/openjdk-8 && mvn --version'
+				//sh "mvn --version"
 			}
 		}
 		stage('Checkout') {
