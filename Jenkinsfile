@@ -8,13 +8,13 @@ pipeline {
 		dockerHome = tool 'myDocker'
 		mavenHome = tool 'myMaven'
 		javaHome = tool 'myJDK'
+		JAVA_HOME = "$javaHome"
 		PATH = "$dockerHome/bin:$javaHome/bin:$mavenHome/bin:$PATH"
 	}
 	stages {
 		stage('Checkout') {
 			steps {
 				//sh "ls -l /var/jenkins_home/tools/hudson.model.JDK/myJDK/*"
-				sh "export JAVA_HOME=/var/jenkins_home/tools/hudson.model.JDK/myJDK/openlogic-openjdk-8u442-b06-linux-x64"
 				sh "java -version"
 				sh "mvn --version"
 				sh "docker version"
