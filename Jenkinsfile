@@ -1,8 +1,5 @@
 pipeline {
 	agent any
-	//agent { docker { image 'openjdk:17' } }
-	//agent { docker { image 'maven:3.6.3-jdk-8' } }
-	//agent { docker { image 'node:23.8' } }
 	
 	environment {
 		dockerHome = tool 'myDocker'
@@ -14,8 +11,6 @@ pipeline {
 	stages {
 		stage('Checkout') {
 			steps {
-				//sh "ls -l /var/jenkins_home/tools/hudson.model.JDK/myJDK/*"
-				sh "java -version"
 				sh "mvn --version"
 				sh "docker version"
 				echo "Build"
@@ -30,20 +25,40 @@ pipeline {
 		}
 		stage('Compile') {
 			steps {
-				echo "Compile"
 				sh "mvn clean compile"
 			}
 		}
 		stage('Test') {
 			steps {
-				echo "Test"
 				sh "mvn test"
 			}
 		}
 		stage('Integration Test') {
 			steps {
-				echo "Integration Test"
 				sh "mvn failsafe:integration-test failsafe:verify"
+			}
+		}
+		stage('Package') {
+			steps {
+				sh "mvn package -DskipTests"
+			}
+		}
+		stage('Build Docker Image') {
+			steps {
+				//"docker build -t in28min/currency-exchange-devops:$env.BUILD_TAG"
+				script {
+					dockerImage = docker.build("in28min/currency-exchange-devops:${env.BUILD_TAG}")
+				}
+			}
+		}
+		stage('Push Docker Image') {
+			steps {
+				script {
+					docker.withRegistry('','dockerhub') {
+						dockerImage.push();
+						dockerImage.push('latest');
+					}
+				}
 			}
 		}
 	}
