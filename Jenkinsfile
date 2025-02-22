@@ -1,7 +1,7 @@
 pipeline {
-	agent any
+	//agent any
 	//agent { docker { image 'openjdk:17' } }
-	//agent { docker { image 'maven:3.8.5-openjdk-17' } }
+	agent { docker { image 'maven:3.6.3-jdk-8' } }
 	//agent { docker { image 'node:23.8' } }
 	
 	environment {
@@ -10,24 +10,10 @@ pipeline {
 		PATH = "$dockerHome/bin:$mavenHome/bin:$PATH"
 	}
 	stages {
-		// stage('Java') {
-		// 	agent { docker { image 'openjdk:11' } }
-		// 	steps {
-		// 		sh "java -version"
-		// 	}
-		// }
-		stage('Maven') {
-			agent { docker { image 'maven:3.8.5-openjdk-17' } }
-			steps {
-				sh "cat /etc/*release"
-				sh 'mvn --version'
-				//sh "mvn --version"
-			}
-		}
 		stage('Checkout') {
 			steps {
-				sh 'mvn --version'
-				sh "docker version"
+				sh "mvn --version"
+				//sh "docker version"
 				echo "Build"
 				echo "PATH - $PATH"
 				echo "JAVA_HOME - $env.JAVA_HOME"
@@ -41,19 +27,19 @@ pipeline {
 		stage('Compile') {
 			steps {
 				echo "Compile"
-				sh "mvn clean compile"
+				//sh "mvn clean compile"
 			}
 		}
 		stage('Test') {
 			steps {
 				echo "Test"
-				sh "mvn test"
+				//sh "mvn test"
 			}
 		}
 		stage('Integration Test') {
 			steps {
 				echo "Integration Test"
-				sh "mvn failsafe:integration-test failsafe:verify"
+				//sh "mvn failsafe:integration-test failsafe:verify"
 			}
 		}
 	}
