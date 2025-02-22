@@ -10,12 +10,12 @@ pipeline {
 		PATH = "$dockerHome/bin:$mavenHome/bin:$PATH"
 	}
 	stages {
-		/*stage('Java') {
-			agent { docker { image 'openjdk:17' } }
+		stage('Java') {
+			agent { docker { image 'openjdk:8' } }
 			steps {
 				sh "java -version"
 			}
-		}*/
+		}
 		stage('Maven') {
 			agent { docker { image 'maven:3.6.3' } }
 			steps {
