@@ -14,6 +14,7 @@ pipeline {
 				sh 'docker version'
 				echo "Build"
 				echo "PATH - $PATH"
+				echo "JAVA_HOME - $env.JAVA_HOME"
 				echo "BUILD_NUMBER - $env.BUILD_NUMBER"
 				echo "BUILD_ID - $env.BUILD_ID"
 				echo "JOB_NAME - $env.JOB_NAME"
