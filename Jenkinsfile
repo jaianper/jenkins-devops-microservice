@@ -5,16 +5,15 @@ pipeline {
 	//agent { docker { image 'node:23.8' } }
 	
 	environment {
-		// dockerHome = tool 'myDocker'
-		// mavenHome = tool 'myMaven'
-		// PATH = "$dockerHome/bin:$mavenHome/bin:$PATH"
 		dockerHome = tool 'myDocker'
-		//mavenHome = tool 'myMaven'
-		PATH = "$dockerHome/bin:$PATH"
+		mavenHome = tool 'myMaven'
+		javaHome = tool 'myJDK'
+		PATH = "$dockerHome/bin:$javaHome/bin:$mavenHome/bin:$PATH"
 	}
 	stages {
 		stage('Checkout') {
 			steps {
+				sh "java -version"
 				sh "mvn --version"
 				sh "docker version"
 				echo "Build"
