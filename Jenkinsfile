@@ -13,6 +13,7 @@ pipeline {
 	stages {
 		stage('Checkout') {
 			steps {
+				sh "ls -l /var/jenkins_home/tools/hudson.model.JDK/myJDK/*"
 				sh "java -version"
 				sh "mvn --version"
 				sh "docker version"
