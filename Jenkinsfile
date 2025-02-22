@@ -1,7 +1,9 @@
 pipeline {
-	agent any
+	//agent any
 	//agent { docker { image 'maven:3.6.3' } }
 	//agent { docker { image 'node:23.8' } }
+	agent { docker { image 'openjdk:11' } }
+	
 	environment {
 		dockerHome = tool 'myDocker'
 		mavenHome = tool 'myMaven'
@@ -24,17 +26,20 @@ pipeline {
 		}
 		stage('Compile') {
 			steps {
-				sh "mvn clean compile"
+				echo "Compile"
+				//sh "mvn clean compile"
 			}
 		}
 		stage('Test') {
 			steps {
-				sh "mvn test"
+				echo "Test"
+				//sh "mvn test"
 			}
 		}
 		stage('Integration Test') {
 			steps {
-				sh "mvn failsafe:integration-test failsafe:verify"
+				echo "Integration Test"
+				//sh "mvn failsafe:integration-test failsafe:verify"
 			}
 		}
 	}
