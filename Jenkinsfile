@@ -54,7 +54,7 @@ pipeline {
 		stage('Push Docker Image') {
 			steps {
 				script {
-					dockerImage.tag("jaianper/currency-exchange-devops:${env.BUILD_TAG}")
+					dockerImage.build("jaianper/currency-exchange-devops:${env.BUILD_TAG}")
 					docker.withRegistry('','dockerhub') {
 						dockerImage.push();
 						dockerImage.push('latest');
