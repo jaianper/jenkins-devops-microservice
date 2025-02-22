@@ -1,7 +1,7 @@
 pipeline {
 	agent any
 	//agent { docker { image 'openjdk:17' } }
-	//agent { docker { image 'maven:3.6.3' } }
+	//agent { docker { image 'maven:3.8.5-openjdk-17' } }
 	//agent { docker { image 'node:23.8' } }
 	
 	environment {
@@ -26,6 +26,7 @@ pipeline {
 		}
 		stage('Checkout') {
 			steps {
+				sh 'mvn --version'
 				sh "docker version"
 				echo "Build"
 				echo "PATH - $PATH"
