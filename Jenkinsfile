@@ -45,7 +45,6 @@ pipeline {
 		}
 		stage('Build Docker Image') {
 			steps {
-				//"docker build -t in28min/currency-exchange-devops:$env.BUILD_TAG"
 				script {
 					dockerImage = docker.build("jaianper/currency-exchange-devops:${env.BUILD_TAG}")
 				}
@@ -53,7 +52,6 @@ pipeline {
 		}
 		stage('Push Docker Image') {
 			steps {
-				//sh "docker build -t jaianper/currency-exchange-devops:${env.BUILD_TAG} ."
 				script {
 					docker.withRegistry('','dockerhub') {
 						dockerImage.push();
